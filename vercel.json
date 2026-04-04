@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/check",
+      "destination": "http://uk1.airanode.cloud:25679/check"
+    },
+    {
+      "source": "/activate",
+      "destination": "http://uk1.airanode.cloud:25679/activate"
+    }
+  ]
+}
