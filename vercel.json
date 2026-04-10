@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/check",
+      "destination": "http://194.62.248.55:30253/check"
+    },
+    {
+      "source": "/activate",
+      "destination": "http://194.62.248.55:30253/activate"
+    }
+  ]
+}
