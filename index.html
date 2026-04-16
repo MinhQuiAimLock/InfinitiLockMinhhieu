@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <title>𝐈𝐧𝐟𝐢𝐧𝐢𝐭𝐲 𝐋𝐨𝐜𝐤 - Dashboard</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div class="aurora-bg" style="pointer-events: none !important;">
+  <div class="aurora-blob blob-1"></div>
+  <div class="aurora-blob blob-2"></div>
+  <div class="aurora-blob blob-3"></div>
+</div>
+
+<canvas id="particles-canvas" style="pointer-events: none !important;"></canvas>
+
+<div class="container" id="main-panel">
+  
+  <header class="header glass-panel">
+    <div class="app-title">
+      <span class="app-sub">OPTIMIZER BOOSTER</span>
+      <span class="app-main">𝐈𝐧𝐟𝐢𝐧𝐢𝐭𝐲 𝐋𝐨𝐜𝐤</span>
+      <span class="app-game">FREE FIRE EXCLUSIVE</span>
+    </div>
+  </header>
+
+  <div id="announce-bar" class="announce hidden glass-panel">
+    <div class="announce-content">
+      <i class="fas fa-bolt" style="color: var(--primary);"></i>
+      <span class="announce-title">HỆ THỐNG ĐÃ SẴN SÀNG</span>
+      <div class="announce-tags">
+        <span class="tag">AI Aim</span>
+        <span class="tag">120 FPS</span>
+      </div>
+    </div>
+    <button class="announce-close" id="announce-close" aria-label="Đóng"><i class="fas fa-times"></i></button>
+  </div>
+
+  <main class="main-content">
+
+    <div id="tab-info" class="tab-content active-tab">
+      <div class="glass-panel profile-card">
+        <div class="profile-header">
+          <div class="profile-avatar">
+            <img src="img/cc.jpg" alt="Admin" onerror="this.src='https://i.ibb.co/L5k6gH2/avatar-placeholder.png'">
+            <div class="status-dot"></div>
+          </div>
+          <div class="profile-info">
+            <h4>Minh Hieu</h4>
+            <p>Developer</p>
+          </div>
+        </div>
+        <div class="admin-links modern-links">
+          <a href="https://www.facebook.com/share/18itmaf78i/?mibextid=wwXIfr" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+          <a href="https://zalo.me/0329505336" target="_blank"><i class="fas fa-comment-dots"></i> Zalo</a>
+        </div>
+      </div>
+
+      <div class="glass-panel key-card">
+        <div class="key-header">
+          <i class="fas fa-shield-alt"></i> QUẢN LÝ BẢN QUYỀN
+        </div>
+        <div class="key-details">
+          <div class="detail-row">
+            <span><i class="fas fa-key"></i> Key hiện tại:</span>
+            <span id="current-key-display" class="highlight-text">Đang tải...</span>
+          </div>
+          <div class="detail-row">
+            <span><i class="fas fa-clock"></i> Thời hạn:</span>
+            <span id="info-key-exp" class="highlight-text success">Đang tải...</span>
+          </div>
+          <div class="detail-row">
+            <span><i class="fas fa-signal"></i> Trạng thái:</span>
+            <span class="highlight-text success">Active</span>
+          </div>
+        </div>
+        <button class="btn-logout" onclick="logoutKey()">
+          <i class="fas fa-power-off"></i> Đăng Xuất
+        </button>
+      </div>
+
+      <button id="btn-start-turbo" class="btn-mega-start">
+        <i class="fas fa-rocket"></i> START
+        <div class="btn-glow"></div>
+      </button>
+
+      <div class="footer">© 2026 BẢN QUYỀN DEV MINH HIEU</div>
+    </div>
+
+    <div id="tab-aimlock" class="tab-content">
+      <section class="section glass-panel">
+        <h2 class="section-title"><i class="fas fa-crosshairs icon-primary"></i> MODULE TẤN CÔNG</h2>
+        <div class="functions-grid">
+          <div class="function-item effect-aimlock">
+            <div class="function-content">
+              <div class="function-icon"><i class="fas fa-crosshairs"></i></div>
+              <div class="function-text-wrap">
+                <span class="function-text">AIMLOCK</span>
+                <span class="desc-text">Khóa Tâm Bám Đầu</span>
+              </div>
+            </div>
+            <div class="toggle-switch" data-function="config">
+              <input type="checkbox" id="config-toggle" class="toggle-input" />
+              <label for="config-toggle" class="toggle-label"><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+
+          <div class="function-item effect-sens">
+            <div class="function-content">
+              <div class="function-icon"><i class="fas fa-bolt"></i></div>
+              <div class="function-text-wrap">
+                <span class="function-text">SENS BOOSTER</span>
+                <span class="desc-text">Nhạy Màn Hình</span>
+              </div>
+            </div>
+            <div class="toggle-switch">
+              <input type="checkbox" id="cn-master-toggle" class="toggle-input">
+              <label for="cn-master-toggle" class="toggle-label"><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+
+          <div class="function-item effect-fps">
+            <div class="function-content">
+              <div class="function-icon"><i class="fas fa-tachometer-alt"></i></div>
+              <div class="function-text-wrap">
+                <span class="function-text">FPS BOOSTER</span>
+                <span class="desc-text">Buff Hiệu Năng</span>
+              </div>
+            </div>
+            <div class="toggle-switch">
+              <input type="checkbox" id="anti-rung-pro" class="toggle-input">
+              <label for="anti-rung-pro" class="toggle-label"><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+
+          <div class="function-item effect-anchor">
+            <div class="function-content">
+              <div class="function-icon"><i class="fas fa-anchor"></i></div>
+              <div class="function-text-wrap">
+                <span class="function-text">ANCHOR AIM</span>
+                <span class="desc-text">Ghìm Tâm Sâu</span>
+              </div>
+            </div>
+            <div class="toggle-switch">
+              <input type="checkbox" id="aim-assist-plus" class="toggle-input">
+              <label for="aim-assist-plus" class="toggle-label"><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+
+          <div class="function-item effect-feather">
+            <div class="function-content">
+              <div class="function-icon"><i class="fas fa-feather-alt"></i></div>
+              <div class="function-text-wrap">
+                <span class="function-text">FEATHER AIM</span>
+                <span class="desc-text">Trơn Tru Tâm</span>
+              </div>
+            </div>
+            <div class="toggle-switch" data-function="lux">
+              <input type="checkbox" id="lux-toggle" class="toggle-input" />
+              <label for="lux-toggle" class="toggle-label"><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+
+          <div class="function-item effect-headshot">
+            <div class="function-content">
+              <div class="function-icon"><i class="fas fa-bullseye"></i></div>
+              <div class="function-text-wrap">
+                <span class="function-text">HEADSHOT FIX</span>
+                <span class="desc-text">Chống Kéo Lố</span>
+              </div>
+            </div>
+            <div class="toggle-switch" data-function="fix-rung">
+              <input type="checkbox" id="fix-rung-toggle" class="toggle-input" />
+              <label for="fix-rung-toggle" class="toggle-label"><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+
+          <div class="function-item effect-shake">
+            <div class="function-content">
+              <div class="function-icon"><i class="fas fa-shield-alt"></i></div>
+              <div class="function-text-wrap">
+                <span class="function-text">SHAKE FIX</span>
+                <span class="desc-text">Giảm Rung Giật</span>
+              </div>
+            </div>
+            <div class="toggle-switch" data-function="nhe-tam">
+              <input type="checkbox" id="nhe-tam-toggle" class="toggle-input" />
+              <label for="nhe-tam-toggle" class="toggle-label"><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+
+          <div class="function-item effect-drift">
+            <div class="function-content">
+              <div class="function-icon"><i class="fas fa-magnet"></i></div>
+              <div class="function-text-wrap">
+                <span class="function-text">DRIFT FIX</span>
+                <span class="desc-text">Chống Lạc Đạn</span>
+              </div>
+            </div>
+            <div class="toggle-switch" data-function="lock-dau">
+              <input type="checkbox" id="lock-dau-toggle" class="toggle-input" />
+              <label for="lock-dau-toggle" class="toggle-label"><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div id="tab-optimize" class="tab-content">
+      <section class="section glass-panel device-selector-container">
+        <h2 class="section-title"><i class="fas fa-mobile-alt icon-primary"></i> THIẾT BỊ : </h2>
+        <div class="device-radio-group">
+          <label class="device-radio">
+            <input type="radio" name="dev-type" class="dev-radio-input" value="iPhone" checked>
+            <div class="device-box"><i class="fab fa-apple"></i> iPhone</div>
+          </label>
+          <label class="device-radio">
+            <input type="radio" name="dev-type" class="dev-radio-input" value="Android">
+            <div class="device-box"><i class="fab fa-android"></i> Android</div>
+          </label>
+        </div>
+      </section>
+      
+      <section class="section glass-panel">
+        <div class="sensi-item">
+          <div class="sensi-content" style="flex-direction: column; align-items: stretch;">
+            <div class="slider-header">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <div class="sensi-icon" style="width:30px;height:30px;font-size:12px;"><i class="fas fa-sliders-h"></i></div>
+                <span class="sensi-label" style="font-size: 14px; font-weight: 800;">TĂNG TỐC AIMLOCK </span>
+              </div>
+              <div class="slider-val-display" id="engine-val-display">Performance</div>
+            </div>
+            <div class="slider-container">
+              <input type="range" id="engine-slider" class="modern-slider" min="1" max="3" step="1" value="1">
+            </div>
+            
+            <select id="mode-select" style="display: none;">
+              <option value="muot-ma">Hiệu Suất</option>
+              <option value="tieu-chuan">Cân Bằng</option>
+              <option value="cao-cap">Đột Phá</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="sensi-item" style="margin-top: 15px;">
+          <div class="sensi-content" style="flex-direction: column; align-items: stretch;">
+            <div class="slider-header">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <div class="sensi-icon" style="width:30px;height:30px;font-size:12px;"><i class="fas fa-compress-arrows-alt"></i></div>
+                <span class="sensi-label" style="font-size: 14px; font-weight: 800;">DPI PRO</span>
+              </div>
+              <div class="slider-val-display" id="dpi-val-display">1.0x</div>
+            </div>
+            <div class="slider-container">
+              <input type="range" id="dpi-slider" class="modern-slider" min="1" max="5" step="1" value="1">
+            </div>
+
+            <select id="dpi-select" style="display: none;">
+              <option value="1.0">1.0</option>
+              <option value="2.0">2.0</option>
+              <option value="3.0">3.0</option>
+              <option value="4.0">4.0</option>
+              <option value="5.0">5.0</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section class="section glass-panel" id="extra-section">
+        <h2 class="section-title"><i class="fas fa-microchip icon-primary"></i> SYSTEM</h2>
+        <div class="console-mobile">
+          <div class="cm-grid">
+            <div class="cm-panel cm-panel-charts glass-subpanel">
+              <h4 class="monitor-subtitle">Realtime Telemetry</h4>
+              <div class="cm-charts">
+                <div class="cm-chart-box">
+                  <div class="cm-chart-header">
+                    <div class="cm-label">CPU Load <span id="cm-cpu-text" class="text-cyan">--%</span></div>
+                    <div class="cm-pill"><span>Core</span><b id="cm-cpu-est">Frame time</b></div>
+                  </div>
+                  <canvas id="cm-cpu-canvas" width="900" height="100"></canvas>
+                </div>
+
+                <div class="cm-chart-box">
+                  <div class="cm-chart-header">
+                    <div class="cm-label">RAM Usage <span id="cm-ram-text" class="text-purple">--</span></div>
+                    <div class="cm-pill"><span>Mem</span><b id="cm-ram-src">Auto</b></div>
+                  </div>
+                  <canvas id="cm-ram-canvas" width="900" height="100"></canvas>
+                  <div class="cm-stats hidden"> 
+                    <div class="cm-stat"><div class="cm-k">Used</div><div class="cm-v" id="cm-heap-used">--</div></div>
+                    <div class="cm-stat"><div class="cm-k">Limit</div><div class="cm-v" id="cm-heap-limit">--</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="cm-topbar glass-subpanel">
+              <div class="cm-controls">
+                <button id="cm-btn-ram" class="cm-btn btn-glass-cyan">Dọn RAM</button>
+                <button id="cm-btn-cpu" class="cm-btn btn-glass-cyan">Dọn CPU</button>
+                <button id="cm-btn-fps" class="cm-btn btn-glass-purple">Lock FPS: OFF</button>
+                <div class="cm-pill monitor-pill" style="flex:1; justify-content:center;">
+                  <span>FPS:</span><b id="cm-fps-now" class="text-cyan">--</b>
+                  <span class="separator" style="margin:0 10px;">|</span>
+                  <b id="cm-mode-now">Unlocked</b>
+                </div>
+              </div>
+            </div>
+
+            <div class="cm-panel cm-panel-console console-pro glass-subpanel">
+              <div class="console-header">
+                <span class="console-dot live"></span><span class="console-title-pro">TERMINAL</span>
+              </div>
+              <div id="cm-console" class="cm-console pro"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section glass-panel">
+        <h2 class="section-title"><i class="fas fa-crosshairs icon-primary"></i> SENSI</h2>
+        <div class="device-radio-group" style="margin-bottom: 15px;">
+          <label class="device-radio">
+            <input type="radio" name="sens-os" class="dev-radio-input" value="iOS" id="sens-os-ios">
+            <div class="device-box"><i class="fab fa-apple"></i> iPhone</div>
+          </label>
+          <label class="device-radio">
+            <input type="radio" name="sens-os" class="dev-radio-input" value="Android" id="sens-os-and">
+            <div class="device-box"><i class="fab fa-android"></i> Android</div>
+          </label>
+        </div>
+        <button id="btn-gen-sens" class="btn-mega-start" style="padding: 14px; font-size: 14px; margin-bottom: 15px; width: 100%;">
+          <i class="fas fa-magic"></i> RUN SENSI
+        </button>
+<div id="sens-result-box" class="hidden" style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 12px; border: 1px solid var(--glass-border);">
+          <div class="detail-row"><span>Nhìn xung quanh:</span><span id="res-sens-1" class="highlight-text" style="color: var(--primary);">--</span></div>
+          <div class="detail-row"><span>Red Dot:</span><span id="res-sens-2" class="highlight-text" style="color: var(--primary);">--</span></div>
+          <div class="detail-row"><span>Ống ngắm 2x:</span><span id="res-sens-3" class="highlight-text" style="color: var(--primary);">--</span></div>
+          <div class="detail-row"><span>Ống ngắm 4x:</span><span id="res-sens-4" class="highlight-text" style="color: var(--primary);">--</span></div>
+          <div class="detail-row"><span>Ống ngắm súng ngắm:</span><span id="res-sens-5" class="highlight-text" style="color: var(--primary);">--</span></div>
+          <div class="detail-row"><span>Nút camera tự do:</span><span id="res-sens-6" class="highlight-text" style="color: var(--primary);">--</span></div>
+        </div>
+      </section>
+
+      <section class="section glass-panel launcher-section">
+        <h2 class="section-title center"><i class="fas fa-play icon-primary"></i> GAME LAUNCHER</h2>
+        <div class="booster-card modern-game-card">
+          <div class="booster-left"><img src="https://i.ibb.co/4ZVWVqm8/IMG-1663.jpg" class="booster-icon"><span>FREE FIRE</span></div>
+          <button class="booster-btn btn-glow-action" onclick="launchGameWithAnim('ff')"><i class="fas fa-bolt"></i> PLAY</button>
+        </div>
+        <div class="booster-card modern-game-card">
+          <div class="booster-left"><img src="https://i.ibb.co/chQpJKC7/IMG-1662.jpg" class="booster-icon"><span>FREE FIRE MAX</span></div>
+          <button class="booster-btn btn-glow-action" onclick="launchGameWithAnim('ffmax')"><i class="fas fa-bolt"></i> PLAY</button>
+        </div>
+      </section>
+    </div>
+<div id="tab-crosshair" class="tab-content">
+      <section class="section glass-panel">
+        <h2 class="section-title"><i class="fas fa-bullseye icon-primary"></i> VIRTUAL CROSSHAIR</h2>
+        
+        <div class="function-item" style="margin-bottom: 20px;">
+          <div class="function-content">
+            <div class="function-icon"><i class="fas fa-eye"></i></div>
+            <div class="function-text-wrap">
+              <span class="function-text">HIỂN THỊ TÂM ẢO</span>
+              <span class="desc-text">Overlay tâm ngắm lên màn hình</span>
+            </div>
+          </div>
+          <div class="toggle-switch">
+            <input type="checkbox" id="crosshair-toggle" class="toggle-input">
+            <label for="crosshair-toggle" class="toggle-label"><span class="toggle-slider"></span></label>
+          </div>
+        </div>
+
+        <div class="sensi-item">
+          <div class="sensi-content" style="flex-direction: column; align-items: stretch;">
+            <div class="slider-header">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <div class="sensi-icon" style="width:30px;height:30px;font-size:12px;"><i class="fas fa-expand"></i></div>
+                <span class="sensi-label" style="font-size: 14px; font-weight: 800;">KÍCH CỠ TÂM</span>
+              </div>
+              <div class="slider-val-display" id="xh-size-val">1.0x</div>
+            </div>
+            <div class="slider-container">
+              <input type="range" id="xh-size-slider" class="modern-slider" min="0.5" max="3" step="0.1" value="1">
+            </div>
+          </div>
+        <div class="sensi-item" style="margin-top: 15px;">
+  <div class="sensi-content" style="flex-direction: column; align-items: stretch;">
+    <div class="slider-header">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <div class="sensi-icon" style="width:30px;height:30px;font-size:12px;"><i class="fas fa-arrows-alt-h"></i></div>
+        <span class="sensi-label" style="font-size: 14px; font-weight: 800;">VỊ TRÍ X (NGANG)</span>
+      </div>
+      <div class="slider-val-display" id="xh-x-val">0</div>
+    </div>
+    <div class="slider-container">
+      <input type="range" id="xh-x-slider" class="modern-slider" min="-200" max="200" step="1" value="0">
+    </div>
+  </div>
+</div>
+
+<div class="sensi-item" style="margin-top: 15px;">
+  <div class="sensi-content" style="flex-direction: column; align-items: stretch;">
+    <div class="slider-header">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <div class="sensi-icon" style="width:30px;height:30px;font-size:12px;"><i class="fas fa-arrows-alt-v"></i></div>
+        <span class="sensi-label" style="font-size: 14px; font-weight: 800;">VỊ TRÍ Y (DỌC)</span>
+      </div>
+      <div class="slider-val-display" id="xh-y-val">0</div>
+    </div>
+    <div class="slider-container">
+      <input type="range" id="xh-y-slider" class="modern-slider" min="-200" max="200" step="1" value="0">
+    </div>
+  </div>
+</div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 25px; padding: 0 10px;">
+          <span class="sensi-label" style="font-size: 14px; font-weight: 800;">MÀU SẮC CHỦ ĐẠO</span>
+          <input type="color" id="xh-color-picker" value="#ff1744" style="border:none; background:none; width:45px; height:45px; cursor:pointer; filter: drop-shadow(0 0 5px rgba(255,23,68,0.3));">
+        </div>
+      </section>
+    </div>
+
+    <div id="virtual-crosshair-overlay" style="position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); pointer-events:none; z-index:9999; display:none;">
+      <div id="xh-draw" style="width:24px; height:24px; border:2.5px solid #ff1744; border-radius:50%; position:relative; box-shadow: 0 0 10px rgba(255,23,68,0.5);">
+        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:5px; height:5px; background:#ff1744; border-radius:50%;"></div>
+      </div>
+    </div>
+  </main>
+
+  <div class="bottom-nav glass-nav">
+    <div class="nav-item active-nav" onclick="switchTab('tab-info', this)">
+      <i class="fas fa-user-astronaut"></i><span>Profile</span>
+    </div>
+    <div class="nav-item" onclick="switchTab('tab-aimlock', this)">
+      <i class="fas fa-crosshairs"></i><span>Aimlock</span>
+    </div>
+    <div class="nav-item" onclick="switchTab('tab-optimize', this)">
+      <i class="fas fa-microchip"></i><span>System</span>
+    </div>
+    <div class="nav-item" onclick="switchTab('tab-crosshair', this)">
+      <i class="fas fa-bullseye"></i><span>Crosshair</span>
+    </div>
+  </div>
+
+</div>
+
+<div id="universal-modal" class="fullscreen-modal hidden">
+  <div class="universal-content">
+    <div class="modal-ring-container">
+      <div class="modal-ring outer" id="um-ring-1"></div>
+      <div class="modal-ring inner" id="um-ring-2"></div>
+      <i class="fas fa-crosshairs modal-center-icon" id="um-icon"></i>
+    </div>
+    <h3 class="glitch-text-safe" id="um-title">ACTIVATING</h3>
+    <div class="progress-container">
+      <div class="progress-bar" id="um-progress"></div>
+    </div>
+    <div class="progress-text" id="um-text">0%</div>
+  </div>
+</div>
+
+<div id="launch-sequence-modal" class="fullscreen-modal hidden">
+  <div class="launch-sequence-content">
+    <h3 style="color: var(--primary); letter-spacing: 2px; margin-bottom: 20px; font-size: 16px;">OPTIMIZING LAUNCH SEQUENCE</h3>
+    <div class="seq-row">
+      <span>CPU PRIORITY</span>
+      <div class="seq-bar-bg"><div class="seq-bar-fill" id="seq-cpu"></div></div>
+      <span class="seq-pct" id="seq-cpu-txt">0%</span>
+    </div>
+    <div class="seq-row">
+      <span>NETWORK ROUTING</span>
+      <div class="seq-bar-bg"><div class="seq-bar-fill" id="seq-net"></div></div>
+      <span class="seq-pct" id="seq-net-txt">0%</span>
+    </div>
+    <div class="seq-row">
+      <span>RAM FLUSH</span>
+      <div class="seq-bar-bg"><div class="seq-bar-fill" id="seq-ram"></div></div>
+      <span class="seq-pct" id="seq-ram-txt">0%</span>
+    </div>
+  </div>
+</div>
+
+<script src="panel-actions.js"></script>
+<script src="codecs.js"></script>
+<script src="codecss.js"></script>
+<script src="codecn.js"></script>
+<script src="app.js"></script>
+<script src="key.js"></script> 
+<script src="feature-hooks.js"></script>
+<script src="features.js"></script>
+
+<script>
+  function switchTab(tabId, element) {
+    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active-tab'));
+    document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active-nav'));
+    document.getElementById(tabId).classList.add('active-tab');
+    element.classList.add('active-nav');
+  }
+
+  function logoutKey() {
+    if(confirm("Xác nhận ngắt kết nối an toàn hệ thống?")) {
+      localStorage.removeItem("vsh_license_key"); 
+      if(window.VSHKeyGate && typeof window.VSHKeyGate.reset === "function") { window.VSHKeyGate.reset(); } 
+      else { location.reload(); }
+    }
+  }
+
+  window.addEventListener('load', () => {
+    setInterval(() => {
+      const infoExpEl = document.getElementById('info-key-exp');
+      const currentKeyEl = document.getElementById('current-key-display');
+      const savedKey = localStorage.getItem("vsh_license_key") || "Chưa xác thực";
+      if(currentKeyEl) currentKeyEl.innerText = savedKey;
+
+      if(window.VSHKeyGate && infoExpEl) {
+        const keyState = window.VSHKeyGate.getState();
+        if(keyState.verified) {
+          if(keyState.expiresAt) {
+            let expDateStr = keyState.expiresAt;
+            if(!isNaN(expDateStr)) { expDateStr = String(expDateStr).length === 10 ? Number(expDateStr) * 1000 : Number(expDateStr); }
+            const distance = new Date(expDateStr).getTime() - new Date().getTime();
+            if(distance > 0) {
+              const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+              const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+              const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+              infoExpEl.innerText = d > 365 ? "Vĩnh viễn" : `${d} ngày ${h}h ${m}m`;
+              infoExpEl.className = "highlight-text success";
+            } else { infoExpEl.innerText = "Hết hạn"; infoExpEl.className = "highlight-text danger"; }
+          } else { infoExpEl.innerText = "Vĩnh viễn"; infoExpEl.className = "highlight-text success"; }
+        } else { infoExpEl.innerText = "Yêu cầu đăng nhập"; infoExpEl.className = "highlight-text danger"; }
+      }
+    }, 1000);
+  });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    // ==========================================
+    // 1. HỆ THỐNG HẠT (PARTICLES) SIÊU MƯỢT
+    // ==========================================
+    const pCanvas = document.getElementById('particles-canvas');
+    if (pCanvas) {
+        const pCtx = pCanvas.getContext('2d');
+        let pWidth = window.innerWidth;
+        let pHeight = window.innerHeight;
+        pCanvas.width = pWidth;
+        pCanvas.height = pHeight;
+
+        let particles = [];
+        const numParticles = 40; // Giữ ở mức 40 hạt để không gây lag
+
+        // 3 Tông màu đỏ chuẩn theme
+        const redShades = ['255, 23, 68', '213, 0, 0', '255, 82, 82']; 
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * pWidth;
+                this.y = Math.random() * pHeight;
+                this.vx = (Math.random() - 0.5) * 0.4; // Trôi ngang chậm
+                this.vy = (Math.random() - 0.5) * 0.4 - 0.2; // Xu hướng bay lên nhẹ
+                this.radius = Math.random() * 1.5 + 1; // Bán kính gốc
+                this.baseAlpha = Math.random() * 0.4 + 0.1;
+                this.alpha = this.baseAlpha;
+                this.life = Math.random() * Math.PI * 2; // Góc ban đầu cho hàm Sine
+                this.lifeSpeed = Math.random() * 0.02 + 0.01; // Tốc độ nhấp nháy
+                this.color = redShades[Math.floor(Math.random() * redShades.length)];
+                this.currentRadius = this.radius;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.life += this.lifeSpeed;
+                
+                // Hiệu ứng Fade in/out tự nhiên bằng Sine
+                this.alpha = this.baseAlpha + Math.sin(this.life) * 0.3;
+                if (this.alpha < 0) this.alpha = 0;
+
+                // Hiệu ứng phóng to / thu nhỏ (breathing)
+                this.currentRadius = this.radius + Math.sin(this.life) * 0.5;
+                if (this.currentRadius < 0.1) this.currentRadius = 0.1;
+
+                // Trôi ra khỏi màn hình thì quay lại
+                if (this.x < 0) this.x = pWidth;
+                if (this.x > pWidth) this.x = 0;
+                if (this.y < 0) this.y = pHeight;
+                if (this.y > pHeight) this.y = 0;
+            }
+            draw() {
+                pCtx.beginPath();
+                pCtx.arc(this.x, this.y, this.currentRadius, 0, Math.PI * 2);
+                pCtx.fillStyle = `rgba(${this.color}, ${this.alpha})`;
+                pCtx.fill();
+                // Glow nhẹ
+                pCtx.shadowBlur = 6;
+                pCtx.shadowColor = `rgba(${this.color}, ${this.alpha})`;
+            }
+        }
+
+        for (let i = 0; i < numParticles; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            pCtx.clearRect(0, 0, pWidth, pHeight);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        window.addEventListener('resize', () => {
+            pWidth = window.innerWidth;
+            pHeight = window.innerHeight;
+            pCanvas.width = pWidth;
+            pCanvas.height = pHeight;
+        });
+    }
+
+    // ==========================================
+    // 2. NEON MOUSE TRAIL
+    // ==========================================
+    document.addEventListener('mousemove', function(e) {
+        let trail = document.createElement('div');
+        trail.className = 'neon-mouse-trail';
+        trail.style.left = e.pageX + 'px';
+        trail.style.top = e.pageY + 'px';
+        document.body.appendChild(trail);
+        setTimeout(() => { trail.remove(); }, 600);
+    });
+
+    // ==========================================
+    // 3. HỆ THỐNG MODAL ĐA NĂNG
+    // ==========================================
+    let modalInterval;
+    let isAnimating = false;
+
+    function runUniversalModal(title, iconClass, color) {
+        if (isAnimating) return; 
+        isAnimating = true;
+
+        const modal = document.getElementById('universal-modal');
+        const umTitle = document.getElementById('um-title');
+        const umIcon = document.getElementById('um-icon');
+        const umProg = document.getElementById('um-progress');
+        const umText = document.getElementById('um-text');
+        const r1 = document.getElementById('um-ring-1');
+        const r2 = document.getElementById('um-ring-2');
+
+        umTitle.innerText = title;
+        umTitle.style.color = color;
+        umTitle.style.textShadow = `0 0 15px ${color}`;
+
+        umIcon.className = `fas ${iconClass} modal-center-icon`;
+        umIcon.style.color = color;
+        umIcon.style.textShadow = `0 0 25px ${color}`;
+
+        r1.style.borderColor = color;
+        r2.style.borderColor = color;
+        umProg.style.background = color;
+        umProg.style.boxShadow = `0 0 15px ${color}`;
+
+        modal.classList.remove('hidden');
+        clearInterval(modalInterval);
+        
+        let pct = 0;
+        umProg.style.width = '0%';
+        umText.innerText = '0%';
+
+        modalInterval = setInterval(() => {
+            pct += Math.floor(Math.random() * 8) + 4;
+            if(pct > 100) pct = 100;
+            umProg.style.width = pct + '%';
+            umText.innerText = pct + '%';
+
+            if(pct === 100) {
+                clearInterval(modalInterval);
+                setTimeout(() => { 
+                    modal.classList.add('hidden'); 
+                    isAnimating = false;
+                }, 300);
+            }
+        }, 50);
+    }
+
+
+    // ==========================================
+    // 5. KÍCH HOẠT HIỆU ỨNG CHO THIẾT BỊ
+    // ==========================================
+    document.querySelectorAll('.dev-radio-input').forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            if(e.target.name === 'sens-os') return; 
+            if(e.target.checked) {
+                const isIos = e.target.value === 'iPhone';
+                runUniversalModal(
+                    `OPTIMIZING KERNEL FOR ${e.target.value.toUpperCase()}`,
+                    isIos ? 'fa-apple' : 'fa-android',
+                    '#ff1744'
+                );
+            }
+        });
+    });
+
+    // ==========================================
+    // 6. KHỞI ĐỘNG ELITE TURBO
+    // ==========================================
+    const startBtn = document.getElementById('btn-start-turbo');
+    if (startBtn) {
+        startBtn.addEventListener('click', () => {
+            runUniversalModal("START INFINITY LOCK", "fa-rocket", "#ff1744");
+            setTimeout(() => {
+                const aimlockTabBtn = document.querySelector('.nav-item[onclick*="tab-aimlock"]');
+                if (aimlockTabBtn) aimlockTabBtn.click();
+            }, 1200);
+        });
+    }
+
+    // ==========================================
+    // 7. XỬ LÝ LOGIC SLIDER (ĐỒNG BỘ ẨN)
+    // ==========================================
+    const engineSlider = document.getElementById('engine-slider');
+    const engineDisplay = document.getElementById('engine-val-display');
+    const hiddenEngineSelect = document.getElementById('mode-select');
+
+    const dpiSlider = document.getElementById('dpi-slider');
+    const dpiDisplay = document.getElementById('dpi-val-display');
+    const hiddenDpiSelect = document.getElementById('dpi-select');
+
+    function updateEngineSlider() {
+        const val = parseInt(engineSlider.value);
+        let pct = ((val - 1) / 2) * 100;
+        engineSlider.style.setProperty('--fill', pct + '%');
+        
+        if (val === 1) { 
+            engineDisplay.innerText = "Performance"; 
+            hiddenEngineSelect.value = "muot-ma"; 
+        }
+        else if (val === 2) { 
+            engineDisplay.innerText = "Balanced"; 
+            hiddenEngineSelect.value = "tieu-chuan"; 
+        }
+        else if (val === 3) { 
+            engineDisplay.innerText = "Extreme"; 
+            hiddenEngineSelect.value = "cao-cap"; 
+        }
+        
+        hiddenEngineSelect.dispatchEvent(new Event('change'));
+    }
+
+    function updateDpiSlider() {
+        const val = parseInt(dpiSlider.value);
+        let pct = ((val - 1) / 4) * 100;
+        dpiSlider.style.setProperty('--fill', pct + '%');
+        
+        dpiDisplay.innerText = val + ".0x";
+        hiddenDpiSelect.value = val + ".0";
+        
+        hiddenDpiSelect.dispatchEvent(new Event('change'));
+    }
+
+    if(engineSlider) {
+        engineSlider.addEventListener('input', updateEngineSlider);
+        updateEngineSlider();
+    }
+    if(dpiSlider) {
+        dpiSlider.addEventListener('input', updateDpiSlider);
+        updateDpiSlider();
+    }
+
+    // ==========================================
+    // 8. CHỨC NĂNG TẠO ĐỘ NHẠY
+    // ==========================================
+    const btnGenSens = document.getElementById('btn-gen-sens');
+    if(btnGenSens) {
+        btnGenSens.addEventListener('click', () => {
+            const isIos = document.getElementById('sens-os-ios').checked;
+            const isAnd = document.getElementById('sens-os-and').checked;
+            
+            if (!isIos && !isAnd) {
+                alert("Vui lòng chọn thiết bị (iPhone / iOS hoặc Android) trước khi tạo!");
+                return;
+            }
+            
+            runUniversalModal("ĐANG PHÂN TÍCH THIẾT BỊ...", "fa-crosshairs", "#ff1744");
+            
+setTimeout(() => {
+                document.getElementById('sens-result-box').classList.remove('hidden');
+                
+                document.getElementById('res-sens-1').innerText = Math.floor(Math.random() * 100) + 101;
+                document.getElementById('res-sens-2').innerText = Math.floor(Math.random() * 100) + 101;
+                document.getElementById('res-sens-3').innerText = Math.floor(Math.random() * 100) + 101;
+                document.getElementById('res-sens-4').innerText = Math.floor(Math.random() * 100) + 101;
+                document.getElementById('res-sens-5').innerText = Math.floor(Math.random() * 100) + 101;
+                document.getElementById('res-sens-6').innerText = Math.floor(Math.random() * 100) + 101;
+            }, 1200);
+        });
+    }
+
+    // ==========================================
+    // 9. GAME LAUNCHER OPTIMIZATION SEQUENCE
+    // ==========================================
+    window.launchGameWithAnim = function(game) {
+        const seqModal = document.getElementById('launch-sequence-modal');
+        seqModal.classList.remove('hidden');
+        
+        let c=0, n=0, r=0;
+        const bC=document.getElementById('seq-cpu'), tC=document.getElementById('seq-cpu-txt');
+        const bN=document.getElementById('seq-net'), tN=document.getElementById('seq-net-txt');
+        const bR=document.getElementById('seq-ram'), tR=document.getElementById('seq-ram-txt');
+        
+        const intv = setInterval(() => {
+            c += Math.floor(Math.random() * 8) + 2; if(c>100) c=100;
+            n += Math.floor(Math.random() * 6) + 1; if(n>100) n=100;
+            r += Math.floor(Math.random() * 10) + 3; if(r>100) r=100;
+            
+            bC.style.width=c+'%'; tC.innerText=c+'%';
+            bN.style.width=n+'%'; tN.innerText=n+'%';
+            bR.style.width=r+'%'; tR.innerText=r+'%';
+            
+            if(c===100 && n===100 && r===100) {
+                clearInterval(intv);
+                setTimeout(() => {
+                    seqModal.classList.add('hidden');
+                    bC.style.width='0%'; bN.style.width='0%'; bR.style.width='0%';
+                    if(game === 'ff' && typeof window.openFreeFire === 'function') window.openFreeFire();
+                    else if(game === 'ffmax' && typeof window.openFreeFireMax === 'function') window.openFreeFireMax();
+                }, 400);
+            }
+        }, 60);
+    };
+});
+// 1. KHAI BÁO BIẾN
+const xhToggle = document.getElementById('crosshair-toggle');
+const xhOverlay = document.getElementById('virtual-crosshair-overlay');
+const xhSizeSlider = document.getElementById('xh-size-slider'); // Đã sửa tên biến khớp với HTML
+const xhSizeVal = document.getElementById('xh-size-val');
+const xhColorPicker = document.getElementById('xh-color-picker');
+const xhDraw = document.getElementById('xh-draw');
+
+// Biến cho X và Y mới thêm
+const xhXSlider = document.getElementById('xh-x-slider');
+const xhYSlider = document.getElementById('xh-y-slider');
+const xhXVal = document.getElementById('xh-x-val');
+const xhYVal = document.getElementById('xh-y-val');
+
+// 2. HÀM CẬP NHẬT TÂM
+function updateCrosshair() {
+    // Lấy giá trị từ các thanh trượt
+    const size = xhSizeSlider ? xhSizeSlider.value : 1;
+    const color = xhColorPicker ? xhColorPicker.value : '#ff1744';
+    const posX = xhXSlider ? xhXSlider.value : 0;
+    const posY = xhYSlider ? xhYSlider.value : 0;
+    
+    // Hiển thị chỉ số lên giao diện
+    if(xhSizeVal) xhSizeVal.innerText = size + "x";
+    if(xhXVal) xhXVal.innerText = posX;
+    if(xhYVal) xhYVal.innerText = posY;
+
+    if(xhDraw && xhOverlay) {
+        // DI CHUYỂN TÂM: Sử dụng translate để dời vị trí từ tâm màn hình
+        xhOverlay.style.transform = `translate(calc(-50% + ${posX}px), calc(-50% + ${posY}px))`;
+        
+        // PHÓNG TO/THU NHỎ TÂM
+        xhDraw.style.transform = `scale(${size})`;
+        
+        // CẬP NHẬT MÀU SẮC & HIỆU ỨNG
+        xhDraw.style.borderColor = color;
+        xhDraw.style.boxShadow = `0 0 10px ${color}80`;
+        if(xhDraw.children[0]) {
+            xhDraw.children[0].style.backgroundColor = color;
+        }
+    }
+    
+    // Đồng bộ với Android (nếu có dùng app bọc)
+    if(window.AndroidBridge && window.AndroidBridge.updateCrosshair) {
+        window.AndroidBridge.updateCrosshair(size, color, posX, posY);
+    }
+}
+
+// 3. LẮNG NGHE SỰ KIỆN (EVENT LISTENERS)
+if(xhToggle) {
+    xhToggle.addEventListener('change', () => {
+        const isChecked = xhToggle.checked;
+        xhOverlay.style.display = isChecked ? 'block' : 'none';
+        
+        if(isChecked) {
+            // Hiệu ứng Modal thông báo
+            if(typeof runUniversalModal === 'function') {
+                runUniversalModal("KÍCH HOẠT TÂM ẢO", "fa-bullseye", "#ff1744");
+            }
+        }
+    });
+}
+
+// Lắng nghe các thanh trượt thay đổi
+if(xhSizeSlider) xhSizeSlider.addEventListener('input', updateCrosshair);
+if(xhColorPicker) xhColorPicker.addEventListener('input', updateCrosshair);
+if(xhXSlider) xhXSlider.addEventListener('input', updateCrosshair);
+if(xhYSlider) xhYSlider.addEventListener('input', updateCrosshair);
+
+// Khởi tạo chạy lần đầu
+updateCrosshair();</script>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+[[redirects]]
+from = "/check"
+to = "http://194.62.248.55:30253/check"
+status = 200
+force = true
+
+[[redirects]]
+from = "/activate"
+to = "http://194.62.248.55:30253/activate"
+status = 200
+force = true
